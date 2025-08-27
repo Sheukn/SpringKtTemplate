@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
 import com.springktskeleton.service.UserService
+import java.util.NoSuchElementException
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,8 +21,12 @@ class UserController(
 
     @GetMapping("/{id}")
     fun getUserById(@PathVariable id: Long): ResponseEntity<UserDto> {
-        val user = userService.findById(id)
-        return ResponseEntity.ok(user)
+        return try {
+            val user = userService.findById(id)
+            ResponseEntity.ok(user)
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        }
     }
 
     @PostMapping
@@ -32,13 +37,21 @@ class UserController(
 
     @PutMapping("/{id}")
     fun updateUser(@PathVariable id: Long, @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
-        val updatedUser = userService.update(id, userDto)
-        return ResponseEntity.ok(updatedUser)
+        return try {
+            val updatedUser = userService.update(id, userDto)
+            ResponseEntity.ok(updatedUser)
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        }
     }
 
     @DeleteMapping("/{id}")
     fun deleteUser(@PathVariable id: Long): ResponseEntity<Void> {
-        userService.delete(id)
-        return ResponseEntity.noContent().build()
+        return try {
+            userService.delete(id)
+            ResponseEntity.noContent().build()
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        }
     }
 }
