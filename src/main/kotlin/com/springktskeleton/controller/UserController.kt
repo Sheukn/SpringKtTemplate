@@ -8,7 +8,7 @@ import com.springktskeleton.service.UserService
 import java.util.NoSuchElementException
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 class UserController(
     private val userService: UserService
 ) {
