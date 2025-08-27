@@ -4,24 +4,28 @@ import org.springframework.stereotype.Service
 import com.springktskeleton.repository.UserRepository
 import com.springktskeleton.entity.UserEntity
 import com.springktskeleton.dto.UserDto
+import com.springktskeleton.mapper.UserMapper
 
 @Service
-class UserService(private val repository: UserRepository) {
+class UserService(
+    private val repository: UserRepository,
+    private val userMapper: UserMapper
+) {
 
-    fun findAll(): List<UserDto> = repository.findAll().map { it.toDto() }
+    fun findAll(): List<UserDto> = userMapper.toDtoList(repository.findAll())
 
     fun findById(id: Long): UserDto = repository.findById(id)
         .orElseThrow { NoSuchElementException("User with id $id not found") }
-        .toDto()
+        .let { userMapper.toDto(it) }
 
-    fun create(dto: UserDto): UserDto = repository.save(dto.toEntity()).toDto()
+    fun create(dto: UserDto): UserDto = repository.save(userMapper.toEntity(dto))
+        .let { userMapper.toDto(it) }
 
     fun update(id: Long, dto: UserDto): UserDto {
         val existing = repository.findById(id)
             .orElseThrow { NoSuchElementException("User with id $id not found") }
-        existing.username = dto.username
-        existing.email = dto.email
-        return repository.save(existing).toDto()
+        val updated = userMapper.updateEntityFromDto(existing, dto)
+        return repository.save(updated).let { userMapper.toDto(it) }
     }
 
     fun delete(id: Long) {
@@ -29,17 +33,5 @@ class UserService(private val repository: UserRepository) {
             throw NoSuchElementException("User with id $id not found")
         }
         repository.deleteById(id)
-    }
-
-    private fun UserEntity.toDto() = UserDto(
-        id = this.id,
-        username = this.username,
-        email = this.email
-    )
-
-    private fun UserDto.toEntity() = UserEntity().apply {
-        id = this@toEntity.id
-        username = this@toEntity.username
-        email = this@toEntity.email
     }
 }
