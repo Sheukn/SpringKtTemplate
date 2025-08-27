@@ -26,6 +26,7 @@ docker-compose up -d
 - ✅ PostgreSQL database
 - ✅ Complete User CRUD (Create, Read, Update, Delete)
 - ✅ Clean architecture: Controller → Service → Repository
+- ✅ Error handling with proper HTTP status codes
 - ✅ Docker setup
 
 ## Project Structure
@@ -63,6 +64,12 @@ curl -X POST http://localhost:8080/api/users \
 ```bash
 curl http://localhost:8080/api/users
 ```
+
+## Error Handling
+
+- **404 Not Found** - When user doesn't exist
+- **201 Created** - User successfully created
+- **200 OK** - Successful operations
 
 ## Customize for Your Project
 
