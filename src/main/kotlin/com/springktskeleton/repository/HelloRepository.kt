@@ -1,6 +1,6 @@
-package com.example.springktskeleton.repository
+package com.springktskeleton.repository
 
-import com.example.springktskeleton.entity.HelloEntity
+import com.springktskeleton.entity.HelloEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

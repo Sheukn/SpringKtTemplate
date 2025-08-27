@@ -1,8 +1,8 @@
-package com.example.springktskeleton.service
+package com.springktskeleton.service
 
-import com.example.springktskeleton.dto.HelloDto
-import com.example.springktskeleton.entity.HelloEntity
-import com.example.springktskeleton.repository.HelloRepository
+import com.springktskeleton.dto.HelloDto
+import com.springktskeleton.entity.HelloEntity
+import com.springktskeleton.repository.HelloRepository
 import org.springframework.stereotype.Service
 
 @Service

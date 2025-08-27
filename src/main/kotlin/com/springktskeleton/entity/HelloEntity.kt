@@ -1,4 +1,4 @@
-package com.example.springktskeleton.entity
+package com.springktskeleton.entity
 
 import jakarta.persistence.*
 

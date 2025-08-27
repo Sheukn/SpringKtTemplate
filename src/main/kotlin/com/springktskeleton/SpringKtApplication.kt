@@ -1,4 +1,4 @@
-package com.example.springktskeleton
+package com.springktskeleton
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

@@ -1,4 +1,4 @@
-package com.example.springktskeleton.dto
+package com.springktskeleton.dto
 
 data class HelloDto(
     val id: Long = 0,
